@@ -4,7 +4,18 @@ require('dotenv').config();
 const { sendBookingConfirmation } = require('./emailService');
 
 const app = express();
-app.use(cors());
+
+// CORS configuration
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production'
+    ? process.env.CLIENT_URL // Use the deployed frontend URL in production
+    : 'http://localhost:5173', // Default Vite dev server port
+  methods: ['POST', 'GET', 'OPTIONS'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post('/api/booking/confirm', async (req, res) => {
