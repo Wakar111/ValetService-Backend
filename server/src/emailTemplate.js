@@ -70,12 +70,11 @@ const emailTemplate = (booking, isCustomerEmail, additionalServicesHtml, generat
       <table>
         <tr><td>Zahlungsmethode:</td><td>${booking.paymentMethod === 'cash' ? 'Barzahlung' : 'PayPal'}</td></tr>
         ${Number(process.env.ONLINE_BOOKING_DISCOUNT) > 0 ? `
-        ${booking.hasNightSurcharge ? `<tr><td>Nachtzuschlag (An-/Abreise 22:00 - 06:00 Uhr):</td><td>25 €</td></tr>` : ''}
-        <tr><td>Ursprünglicher Preis:</td><td>${(booking.totalPrice + (booking.hasNightSurcharge ? 25 : 0)).toFixed(2)} €</td></tr>
-        <tr class="discount"><td>Online-Buchungsrabatt (${Number(process.env.ONLINE_BOOKING_DISCOUNT) * 100}%):</td><td>-${((booking.totalPrice + (booking.hasNightSurcharge ? 25 : 0)) * Number(process.env.ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</td></tr>
-        <tr class="total-row"><td>Gesamtbetrag:</td><td>${((booking.totalPrice + (booking.hasNightSurcharge ? 25 : 0)) * (1 - Number(process.env.ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</td></tr>
+        <tr><td>Ursprünglicher Preis:</td><td>${booking.totalPrice.toFixed(2)} €</td></tr>
+        <tr class="discount"><td>Online-Buchungsrabatt (${Number(process.env.ONLINE_BOOKING_DISCOUNT) * 100}%):</td><td>-${(booking.totalPrice * Number(process.env.ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</td></tr>
+        <tr class="total-row"><td>Gesamtbetrag:</td><td>${(booking.totalPrice * (1 - Number(process.env.ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</td></tr>
         ` : `
-        <tr class="total-row"><td>Gesamtbetrag:</td><td>${(booking.totalPrice + (booking.hasNightSurcharge ? 25 : 0)).toFixed(2)} €</td></tr>
+        <tr class="total-row"><td>Gesamtbetrag:</td><td>${booking.totalPrice.toFixed(2)} €</td></tr>
         `}
       </table>
       <p style="text-align: right; font-size: 0.9em;">* inkl. 19% MwSt</p>

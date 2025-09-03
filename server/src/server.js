@@ -6,16 +6,12 @@ const { sendBookingConfirmation } = require('./emailService');
 const app = express();
 
 // CORS configuration
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production'
-    ? process.env.CLIENT_URL // Use the deployed frontend URL in production
-    : 'http://localhost:5173', // Default Vite dev server port
-  methods: ['POST', 'GET', 'OPTIONS'],
+app.use(cors({
+  origin: process.env.CLIENT_URL,
   credentials: true,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
 
 app.post('/api/booking/confirm', async (req, res) => {

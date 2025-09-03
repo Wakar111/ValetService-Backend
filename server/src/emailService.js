@@ -50,7 +50,9 @@ const createEmailContent = (booking, isCustomerEmail) => {
   const additionalServicesHtml = additionalServicesWithPrices.length > 0
     ? additionalServicesWithPrices.map(service => 
       `<tr><td style="padding: 4px 8px">${service.name}</td><td style="padding: 4px 8px">${service.price.toFixed(2)} €</td></tr>`
-    ).join('') + `<tr style="border-top: 1px solid #eee"><td style="padding: 12px 8px 4px; font-weight: bold">Gesamtbetrag der Zusatzleistungen:</td><td style="padding: 12px 8px 4px; font-weight: bold">${(additionalServicesTotal + nightSurcharge).toFixed(2)} €</td></tr>`
+    ).join('') + 
+    (booking.hasNightSurcharge ? `<tr><td style="padding: 4px 8px">Nachtzuschlag (An-/Abreise 22:00 - 06:00 Uhr)</td><td style="padding: 4px 8px">25.00 €</td></tr>` : '') + 
+    `<tr style="border-top: 1px solid #eee"><td style="padding: 12px 8px 4px; font-weight: bold">Gesamtbetrag der Zusatzleistungen:</td><td style="padding: 12px 8px 4px; font-weight: bold">${(additionalServicesTotal + nightSurcharge).toFixed(2)} €</td></tr>`
     : '';
 
   return emailTemplate(booking, isCustomerEmail, additionalServicesHtml, generateBookingNumber, formatDate);
