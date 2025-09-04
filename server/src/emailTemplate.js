@@ -80,7 +80,6 @@ const emailTemplate = (booking, isCustomerEmail, additionalServicesHtml, generat
         <tr><td>Zahlungsmethode:</td><td>${booking.paymentMethod === 'cash' ? 'Barzahlung' : 'PayPal'}</td></tr>
         ${Number(process.env.ONLINE_BOOKING_DISCOUNT) > 0 ? `
         <tr><td>Ursprünglicher Preis:</td><td>${booking.totalPrice.toFixed(2)} €</td></tr>
-        ${booking.hasNightSurcharge ? `<tr><td>Nachtzuschlag (An-/Abreise 22:00 - 06:00 Uhr)</td><td>30.00 €</td></tr>` : ''}
         <tr class="discount"><td>Online-Buchungsrabatt (${Number(process.env.ONLINE_BOOKING_DISCOUNT) * 100}%):</td><td>-${(booking.totalPrice * Number(process.env.ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</td></tr>
         <tr class="total-row"><td>Gesamtbetrag:</td><td>${(booking.totalPrice * (1 - Number(process.env.ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</td></tr>
         ` : `
